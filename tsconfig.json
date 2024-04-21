@@ -1,0 +1,38 @@
+
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "isolatedModules": true,
+        "module": "es2020",
+        "noImplicitAny": true,
+        "declaration": true,
+        "declarationMap": true,
+        "declarationDir": "dist",
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "target": "es2020",
+        "strictNullChecks": true,
+        "lib": [
+            "es2020",
+            "esnext",
+            "dom"
+        ]
+    },
+    "include": [
+        "src/**/*",
+        "node_modules/@types/wicg-file-system-access/index.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "**/*.spec.ts"
+    ]
+}

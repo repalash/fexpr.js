@@ -1,6 +1,6 @@
 {
   "name": "fexpr.js",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Filter expression parser(like SQL WHERE) for JavaScript. Port of fexpr in Go",
   "main": "src/index.ts",
   "module": "src/index.ts",
@@ -25,7 +25,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/repalash/rollup-library-starter.git"
+    "url": "git://github.com/repalash/fexpr.js.git"
   },
   "keywords": [
     "typescript",
@@ -44,9 +44,9 @@
   "author": "repalash <palash@shaders.app>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/repalash/rollup-library-starter/issues"
+    "url": "https://github.com/repalash/fexpr.js/issues"
   },
-  "homepage": "https://github.com/repalash/rollup-library-starter#readme",
+  "homepage": "https://github.com/repalash/fexpr.js#readme",
   "devDependencies": {
     "rimraf": "^5.0.5",
     "@rollup/plugin-commonjs": "^25.0.7",

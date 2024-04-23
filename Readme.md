@@ -1,7 +1,7 @@
 fexpr.js [![NPM Package](https://img.shields.io/npm/v/fexpr.js.svg)](https://www.npmjs.com/package/threepipe) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 ===============================================================================
 
-**fexpr** is a filter query language parser that generates easy to work with AST structure so that you can create safely SQL, Elasticsearch, etc. queries from user input.
+**fexpr** is a filter query language parser that generates easy to work with AST structure so that you can safely create SQL, Elasticsearch, etc. queries from user input. **fexpr.js** is a typescript/javascript port of [fexpr](https://github.com/ganigeorgiev/fexpr).
 
 Or in other words, transform the string `"id > 1"` into the struct `[{&& {{identifier id} > {number 1}}}]`.
 
@@ -9,7 +9,7 @@ Supports parenthesis and various conditional expression operators (see [Grammar]
 
 This is a zero-dependency(<5KB) library that works in both node.js and browser environments.
 
-This is a almost line by line port of [fexpr](https://github.com/ganigeorgiev/fexpr) (BSD 3-Clause License) by [Gani Georgiev](https://github.com/ganigeorgiev), from golang to typescript.
+Almost a line by line port of [fexpr](https://github.com/ganigeorgiev/fexpr) (BSD 3-Clause License) by [Gani Georgiev](https://github.com/ganigeorgiev), from golang to typescript with minor changes. 
 
 ## Demo
 

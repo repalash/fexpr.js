@@ -11,18 +11,18 @@ import {
  * of left operand, operator and a right operand.
  */
 export class Expr {
-	Left: Token;
-	Op: SignOp | '';
-	Right: Token;
+	Left?: Token;
+	Op?: SignOp;
+	Right?: Token;
 
 	constructor(left?: Token, op?: SignOp, right?: Token) {
-		this.Left = left || {Literal: '', Type: TokenType.EOF};
-		this.Op = op || '';
-		this.Right = right || {Literal: '', Type: TokenType.EOF};
+		this.Left = left;
+		this.Op = op;
+		this.Right = right;
 	}
 
 	IsZero(): boolean {
-		return !this.Op && !this.Left.Literal && (!this.Right || !this.Right.Literal);
+		return !this.Op && !this.Left?.Literal && !this.Left?.Type && !this.Right?.Literal && !this.Right?.Type;
 	}
 }
 
@@ -58,7 +58,7 @@ enum ParserSteps {
  * Comments and whitespaces are ignored.
  * @param text The text to parse
  */
-export function parse(text: string): ExprGroup[] {
+export function parse(text?: string): ExprGroup[] {
 	const result: ExprGroup[] = [];
 	const scanner = new Scanner(text);
 	let step = ParserSteps.BeforeSign;

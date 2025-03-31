@@ -49,18 +49,18 @@ export enum TokenType {
 
 // Token represents a single scanned literal (one or more combined runes).
 export interface Token {
-	Type: TokenType;
-	Literal: string;
+	Type?: TokenType;
+	Literal?: string;
 	Error?: Error;
 }
 
 // Scanner represents a filter and lexical scanner.
 export class Scanner {
-	private r: string;
+	private r?: string;
 	private index: number;
 	get position(): number { return this.index; }
 
-	constructor(r: string) {
+	constructor(r?: string) {
 		this.r = r;
 		this.index = 0;
 	}
@@ -92,7 +92,7 @@ export class Scanner {
 		}
 		if (isTextStartRune(ch)) {
 			this.unread();
-			return this.scanText();
+			return this.scanText(false);
 		}
 		if (isSignStartRune(ch)) {
 			this.unread();
@@ -200,7 +200,7 @@ export class Scanner {
 	 * scanText consumes all contiguous quoted text runes.
 	 * @private
 	 */
-	private scanText(): Token {
+	private scanText(preserveQuotes: boolean): Token {
 		let start = this.index;
 
 		let buf = "";
@@ -232,7 +232,7 @@ export class Scanner {
 		let err: Error | undefined;
 		if (!hasMatchingQuotes) {
 			err = new Error(`invalid quoted text ${literal} at position ${start}`);
-		} else {
+		} else if (!preserveQuotes) {
 			// unquote
 			literal = literal.substring(1, literal.length - 1);
 			// remove escaped quotes prefix (aka. \)
@@ -323,14 +323,14 @@ export class Scanner {
 				buf += ch;
 			} else if (isTextStartRune(ch)) {
 				this.unread();
-				const t = this.scanText();
+				const t = this.scanText(true); // with quotes to preserve the exact text start/end runes
 				if (t.Error) {
 					buf += t.Literal;
 					return { Type: TokenType.Group, Literal: buf, Error: t.Error };
 				}
 
 				// quote the literal to preserve the text start/end runes
-				buf += `"${t.Literal}"`;
+				buf += t.Literal;
 			} else if (ch === ')') {
 				openGroups--;
 				if (openGroups <= 0) {
@@ -383,7 +383,7 @@ export class Scanner {
 	 * @private
 	 */
 	private read(): string {
-		if (this.index >= this.r.length) {
+		if (!this.r || this.index >= this.r.length) {
 			return eof;
 		}
 		return this.r[this.index++];

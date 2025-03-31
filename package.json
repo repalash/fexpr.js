@@ -1,22 +1,27 @@
 {
   "name": "fexpr.js",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Filter expression parser(like SQL WHERE) for JavaScript. Port of fexpr in Go",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/fexpr.js",
+  "browser": "dist/fexpr.min.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "source": "src/index.ts",
+  "type": "module",
   "sideEffects": false,
   "scripts": {
-    "new:pack": "npm run prepare && clean-package && npm pack && clean-package restore",
-    "new:publish": "npm run prepare && clean-package && npm publish && clean-package restore",
-    "build": "rimraf dist && NODE_ENV=production rollup -c",
+    "build": "rimraf dist ; vite build",
     "test": "jest --coverage",
-    "dev": "rollup -c -w",
+    "dev": "NODE_ENV=development vite build --watch",
     "serve-docs": "ws -d docs -p 8080",
-    "serve": "ws -p 8000",
-    "docs": "npx typedoc ./src/index.ts",
-    "prepare": "npm run build && npm run docs"
+
+    "docs": "rimraf docs ; npx typedoc ./src/index.ts",
+    "prepare": "npm run build && npm run docs",
+    "prepublishOnly": "npm run test",
+    "check": "tsc -p tsconfig.json --noEmit",
+
+    "new:pack": "npm run prepare && clean-package && npm pack && clean-package restore",
+    "new:publish": "git diff --exit-code --name-only HEAD * && npm run test && npm run prepare && clean-package && npm publish && clean-package restore && git tag v$npm_package_version"
   },
   "files": [
     "dist",
@@ -49,22 +54,20 @@
   },
   "homepage": "https://github.com/repalash/fexpr.js#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-terser": "^0.4.4",
-    "@rollup/plugin-typescript": "^11.1.6",
-    "@types/jest": "^29.5.13",
+    "@types/jest": "^29.5.14",
     "clean-package": "^2.2.0",
     "jest": "^29.7.0",
-    "local-web-server": "^5.3.3",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.16.0",
-    "rollup-plugin-license": "^3.3.1",
+    "local-web-server": "^5.4.0",
+    "rimraf": "^6.0.1",
+    "rollup-plugin-license": "^3.6.0",
     "ts-jest": "^29.2.5",
-    "tslib": "^2.6.2",
-    "typedoc": "^0.25.13",
-    "typescript": "^5.4.5"
+    "tslib": "^2.8.1",
+    "vite-plugin-dts": "^4.5.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.0.5",
+    "typedoc": "^0.28.1",
+    "@rollup/plugin-replace": "^6.0.2"
   },
   "optionalDependencies": {
     "win-node-env": "^0.6.1"
@@ -81,10 +84,6 @@
       "//"
     ],
     "replace": {
-      "main": "dist/fexpr.js",
-      "browser": "dist/fexpr.min.js",
-      "module": "dist/index.js",
-      "types": "dist/index.d.ts"
     }
   },
   "//": {
